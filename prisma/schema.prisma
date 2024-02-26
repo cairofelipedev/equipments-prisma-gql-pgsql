@@ -13,12 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Equipments {
+model Equipment {
   id        Int      @id @default(autoincrement())
   chassi    String   @unique
   typeId    Int      @map("type_id")
   createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
   userId    Int      @map("user_id")
+  Signal    Signal[]
 
   @@map("equipments")
 }
@@ -32,19 +34,21 @@ model Type {
 }
 
 model Signal {
-  id          Int      @id @default(autoincrement())
-  equipmentId Int      @map("equipment_id")
+  id          Int       @id @default(autoincrement())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId Int       @map("equipment_id")
   value       Int
   parameter   String
-  createdAt   DateTime @default(now()) @map("created_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
 
   @@map("signals")
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  name      String?
+  Equipment Equipment[]
 
   @@map("users")
 }
