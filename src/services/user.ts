@@ -6,7 +6,7 @@ export interface CreateUserPayload {
 }
 
 class UserService {
-  public static createProduct(payload: CreateUserPayload) {
+  public static createUser(payload: CreateUserPayload) {
     const { name, email } = payload;
 
     return prismaClient.user.create({

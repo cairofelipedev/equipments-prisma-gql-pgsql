@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { prismaClient } from "../lib/db";
 import { User } from "./user";
+import { Type } from "./type";
 
 async function createApolloServer() {
   // Create Graphql Server
@@ -17,6 +18,7 @@ async function createApolloServer() {
 
         type Mutation {
           ${User.mutations},
+          ${Type.mutations},
         }
     `, // Schema
     resolvers: {
@@ -32,6 +34,7 @@ async function createApolloServer() {
       },
       Mutation: {
         ...User.resolvers.mutations,
+        ...Type.resolvers.mutations,
       },
     },
   });

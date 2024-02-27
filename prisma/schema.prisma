@@ -16,6 +16,7 @@ datasource db {
 model Equipment {
   id        Int      @id @default(autoincrement())
   chassi    String   @unique
+  type      Type     @relation(fields: [typeId], references: [id])
   typeId    Int      @map("type_id")
   createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [id])
@@ -26,9 +27,10 @@ model Equipment {
 }
 
 model Type {
-  id        Int      @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime    @default(now()) @map("created_at")
+  Equipment Equipment[]
 
   @@map("types")
 }
