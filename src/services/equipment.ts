@@ -10,7 +10,7 @@ class EquipmentService {
   public static createEquipment(payload: CreateEquipmentPayload) {
     const { chassi, typeId, userId} = payload;
 
-    return prismaClient.equipments.create({
+    return prismaClient.equipment.create({
       data: {
         chassi,
         typeId,
